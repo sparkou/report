@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="reportApp">
+<head>
+    <title>Daily Report </title>
+    <meta name="Generator" content="EditPlus">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <link rel="stylesheet" media="screen" href="css/app.css">
+    <link rel="stylesheet" media="screen" href="css/bootstrap.css">
+    <script src="js/angular/angular.js"></script>
+    <script src="js/angular/angular-ui-router.js"></script>
+    <!--<script src="js/angular/angular-resource.js"></script>-->
+    <script src="js/ui-bootstrap-tpls-0.14.3.min.js"></script>
+
+    <script src="app.js"></script>
+    <script src="controllers/controller.js"></script>
+
+</head>
+
+<body ng-controller="ReportCtrl">
+<div class="well">
+    <h2 style="text-align: center; margin-top: 50px">Daily Report</h2>
+    <hr>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <table class="table table-hover">
+                <thead>
+                    <th>Name</th><th>Test</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="kitty in kitties">
+                        <td>{{kitty.name}}</td>
+                        <td>{{kitty.test}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <button class="btn btn-default" ng-click="add()">Add</button>
+        </div>
+    </div>
+    <div ng-view></div>
+</div>
+
+</body>
+</html>
