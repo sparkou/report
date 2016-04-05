@@ -3,11 +3,19 @@
  */
 var reportApp = angular.module('reportApp')
 
-reportApp.controller('ReportCtrl', function($scope, $uibModal) {
-
-    $scope.kitties = [];
+reportApp.controller('ReportCtrl', function($scope, $uibModal, localStorageService) {
+    $scope.users = {
+        names: ['Spark', 'Feng', 'Marlon', 'Felix', 'Waikei', 'Kane', 'Hyman', 'Sky', 'Melody', 'Alex', 'Weber']
+    }
+    console.log(localStorageService.get('kitties'));
+    if(localStorageService.get('kitties') == null) {
+        $scope.kitties = [];
+        localStorageService.set('kitties', $scope.kitties);
+    }else {
+        $scope.kitties = localStorageService.get('kitties');
+    }
     $scope.today = new Date();
-    $scope.add = function() {
+    $scope.add = function(name) {
         //console.log($scope.kitties);
         var modalInstance = $uibModal.open({
             animation: false,
@@ -15,9 +23,9 @@ reportApp.controller('ReportCtrl', function($scope, $uibModal) {
             controller: 'NewReportCtrl',
             size: 'lg',
             resolve: {
-                //type: function() {
-                //    return type;
-                //}
+                name: function() {
+                    return name;
+                }
             }
         });
         modalInstance.result.then(function (data) {
@@ -28,12 +36,9 @@ reportApp.controller('ReportCtrl', function($scope, $uibModal) {
     }
 });
 
-reportApp.controller('NewReportCtrl', function($scope,  $uibModalInstance) {
+reportApp.controller('NewReportCtrl', function($scope, $uibModalInstance, localStorageService, name) {
+    $scope.name = name;
     $scope.today = new Date();
-    $scope.users = {
-        names: ['Spark', 'Feng', 'Marlon', 'Felix', 'Waikei', 'Kane', 'Hyman', 'Sky', 'Melody', 'Alex', 'Weber']
-    }
-    console.log($scope.users.name);
     $scope.tasks = [];
 
     $scope.isShown = false;
@@ -50,9 +55,16 @@ reportApp.controller('NewReportCtrl', function($scope,  $uibModalInstance) {
     }
 
     $scope.saveTask = function() {
+        console.log($scope.task);
         $scope.tasks.push($scope.task);
         $scope.isShown = false;
         $scope.buttonShown = true;
+    }
+
+    $scope.showCase = function(task) {
+        $scope.isShown = true;
+        $scope.task = task;
+        $scope.buttonShown = false;
     }
     $scope.addReport = function() {
         // write to json
@@ -70,7 +82,16 @@ reportApp.controller('NewReportCtrl', function($scope,  $uibModalInstance) {
             alex: "alex.li@missionsky.com",
             weber: "weber.yan@missionsky.com"
         }
-        var kitty = {name: $scope.users.name}
+
+
+
+        var kitty = {name: $scope.name}
+        var kitties = localStorageService.get('kitties');
+        //.push(kitty);
+        kitties.push(kitty);
+        //console.log(kitties);
+        //console.log(a);
+        localStorageService.set('kitties', kitties);
         $uibModalInstance.close(kitty);
     }
     $scope.cancel = function () {

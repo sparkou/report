@@ -7,7 +7,7 @@
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-3">
-                <select class="form-control" id="name" ng-model="users.name" ng-options="name for name in users.names"></select>
+                <h5 id="name">{{name}}</h5>
             </div>
         </div>
     </form>
@@ -17,7 +17,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="task in tasks">
-            <td>{{task.caseNo}}</td>
+            <td><a href="" ng-click="showCase(task)">{{task.caseNo}}</a></td>
             <td><a href="{{task.caseLink}}">{{task.caseLink}}</a></td>
             <td>{{task.status}}</td>
         </tr>
@@ -81,12 +81,13 @@
             </div>
         </div>
     </form>
-    <div class="col-sm-offset-2 col-sm-10">
-        <button ng-click="showTask()" class="btn btn-default" ng-show="buttonShown">Add Task</button>
-    </div>
-
-
-
+    <form class="form-horizontal" ng-show="buttonShown">
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+                <button ng-click="showTask()" class="btn btn-default">Add Task</button>
+            </div>
+        </div>
+    </form>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="addReport()" ng-disabled="reportForm.$invalid">Submit</button>
